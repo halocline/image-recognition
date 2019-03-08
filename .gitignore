@@ -11,6 +11,9 @@
 # production
 /build
 
+# data
+yolo.weights
+
 # misc
 .DS_Store
 .env.local
