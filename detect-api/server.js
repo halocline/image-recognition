@@ -9,7 +9,6 @@ const port = 3001
  */
 app.use( express.static(__dirname + '/public') )
 
-
 // Logging requests
 app.use( function (req, res, next) {
 	console.log('Method:', req.method)

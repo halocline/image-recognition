@@ -18,7 +18,7 @@ function DetectionList (props) {
   });
 
   return (
-    <div class="container">
+    <div>
       {listItems}
     </div>
   )
@@ -32,10 +32,10 @@ class Detection extends React.Component {
 
   render() {
     return (
-      <detection className="Detection">
+      <div className="Detection">
         <div>{this.props.name}</div>
         <div>{this.props.prob}</div>
-      </detection>
+      </div>
     )
   }
 }

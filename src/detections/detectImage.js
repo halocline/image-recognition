@@ -1,7 +1,7 @@
 const darknet = require('@moovel/yolo')
 const fs = require('fs')
 
-/*
+
 darknet.detectImage({
   cfg: './cfg/yolo.cfg',
   weights: './yolo.weights',
@@ -12,7 +12,7 @@ darknet.detectImage({
 }, (modified, original, detections, dimensions) => {
   handleDetections(detections)
 })
-*/
+
 
 const handleDetections = (detections) => {
   console.log('Detections:', detections)
@@ -32,6 +32,7 @@ const writeToFile = (data) => {
   })
 }
 
+/*
 const detectImage = () => {
   darknet.detectImage({
     cfg: './cfg/yolo.cfg',
@@ -45,5 +46,4 @@ const detectImage = () => {
     return detections
   })
 }
-
-export default detectImage;
+*/

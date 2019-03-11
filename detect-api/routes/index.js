@@ -1,7 +1,8 @@
-const routes = require('express').Router()
+const routes = require('express').Router();
+const detectImage = require('../detectImage.js');
 
-routes.get('/', async function (req, res) {
-  return new Promise(function(resolve, reject) {
+routes.get('/', function (req, res) {
+  return new Promise(async function(resolve, reject) {
     const json = [
      {
         "x": 0.7502243518829346,
@@ -28,9 +29,9 @@ routes.get('/', async function (req, res) {
         "name": "dog"
      }
   ]
+    const detections = await detectImage.detectImage()
 
-    console.log(json);
-    resolve( res.json(json) )
+    resolve( res.json(detections) )
   });
 })
 
