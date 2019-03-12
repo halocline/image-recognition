@@ -36,6 +36,7 @@ class MediaInput extends React.Component {
       console.log(res.statusText);
       console.log(res);
       console.log(res.data.file);
+      this.props.imageUploadCallback(res.data.file)
     })
   }
 
@@ -43,7 +44,7 @@ class MediaInput extends React.Component {
     return(
       <div className="MediaInput">
         <div>
-          <h2>Media Input</h2>
+          <h3>Media Input</h3>
         </div>
         <div>
           <div>
@@ -57,7 +58,7 @@ class MediaInput extends React.Component {
             ></input>
           </div>
           <div>
-            <button onClick={this.handleFileUpload}>Submit for Object Detection</button>
+            <button onClick={this.handleFileUpload}>Upload Selected Image</button>
             <div>{ Math.round(this.state.loaded, 2) } %</div>
           </div>
         </div>
