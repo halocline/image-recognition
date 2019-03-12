@@ -1,13 +1,16 @@
 import React from 'react';
 import './detections.css'
 
-// Detect API settings
+// Detect-API settings
+const apiConfig = require('../config/').detectApi
+/*
 const apiConfig = {
-  url: 'http://localhost:3001/',
+  url: 'http://localhost:8080',
   headers: {
     method: "GET",
   }
 }
+*/
 
 function DetectionList (props) {
   const detections = props.detections
@@ -26,10 +29,6 @@ function DetectionList (props) {
 }
 
 class Detection extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return (
       <div className="Detection">
@@ -53,8 +52,10 @@ class Detections extends React.Component {
 
   findDetections() {
     let detections = []
+    //const path = '/new?img=' + './data/dog.jpg'
+    const url = apiConfig.url
 
-    fetch(apiConfig.url, apiConfig.headers)
+    fetch(url, apiConfig.headers)
     .then(res => {
       return res.json();
     })

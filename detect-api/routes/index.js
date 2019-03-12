@@ -29,10 +29,49 @@ routes.get('/', function (req, res) {
         "name": "dog"
      }
   ]
-    const detections = await detectImage.detectImage()
+    const options = {
+      //image: './data/horses.jpg',
+      //image: './public/files/scream.jpg',
+    }
+    const detections = await detectImage.detectImage(options)
 
     resolve( res.json(detections) )
   });
+})
+
+
+routes.get('/new', function (req, res) {
+  return new Promise(async function(resolve, reject) {
+    const requestedImage = req.query.imgfile
+    console.log('Requested image:', requestedImage);
+    const options = {
+      image: requestedImage,
+    }
+    const detections = await detectImage.detectImage(options)
+
+    resolve( res.json(detections) )
+  });
+})
+
+
+routes.post('/upload', (req, res, next) => {
+  let uploadFile = req.files.file
+  const fileName = req.files.file.name
+
+  console.log('Post endpoint hit.');
+  console.log('Upload POST Request:', req.files);
+
+  uploadFile.mv(
+    `${__dirname}/../public/files/${fileName}`,
+    (err) => {
+      if(err) {
+        return res.status(500).send(err)
+      }
+      res.json({
+        file: `public/files/${req.files.file.name}`,
+      })
+    }
+  )
 })
 
 module.exports = routes

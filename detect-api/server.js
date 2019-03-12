@@ -1,8 +1,10 @@
 const express = require('express');
 const routes = require('./routes');
+const bodyParser = require('body-parser');
+const fileUpload = require('express-fileupload');
 
 const app = express()
-const port = 3001
+const port = 8080
 
 /*
  * Configuring express
@@ -36,6 +38,9 @@ const allowCrossDomain = function(req, res, next) {
 
 app.use(allowCrossDomain)
 
+app.use(bodyParser.json()); // support json encoded bodies
+app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
+app.use(fileUpload());
 app.use('/', routes)
 
 /*
