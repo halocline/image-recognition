@@ -1,5 +1,6 @@
 import React from 'react'
 import axios from 'axios'
+import './media-input.css'
 // Detect-API settings
 const apiConfig = require('../config/').detectApi
 
@@ -11,6 +12,8 @@ class MediaInput extends React.Component {
     this.state = {
       selectedFile: null,
       loaded: 0,
+      uploaded: false,
+      uploadedImage: null,
     }
   }
 
@@ -33,10 +36,11 @@ class MediaInput extends React.Component {
       }
     })
     .then( res => {
-      console.log(res.statusText);
-      console.log(res);
-      console.log(res.data.file);
       this.props.imageUploadCallback(res.data.file)
+      this.setState({
+        uploaded: true,
+        uploadedImage: apiConfig.url + '/files/' + this.state.selectedFile.name
+      })
     })
   }
 
@@ -60,6 +64,9 @@ class MediaInput extends React.Component {
           <div>
             <button onClick={this.handleFileUpload}>Upload Selected Image</button>
             <div>{ Math.round(this.state.loaded, 2) } %</div>
+          </div>
+          <div>
+            <img className="orig" src={this.state.uploadedImage} alt="To be analyzed" />
           </div>
         </div>
       </div>

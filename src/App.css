@@ -31,3 +31,12 @@
     transform: rotate(360deg);
   }
 }
+
+footer {
+  background-color: #282c34;
+  position: relative;
+  bottom: 0;
+  width: 100%;
+  padding: 40px;
+  color: lightgrey;
+}
