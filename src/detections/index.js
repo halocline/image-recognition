@@ -1,32 +1,19 @@
 import React from 'react';
-import './detections.css'
+import './detections.scss'
 import MediaInput from '../media-input';
 
 // Detect-API settings
 const apiConfig = require('../config/').detectApi
 
 function drawBoundingBox(props) {
-  const {ctx, x, y, width, height} = props;
+  const {ctx, x, y, width, height, name, prob} = props;
   ctx.strokeRect(x, y, width, height);
+  ctx.fillText(
+    name + ', ' + (prob * 100).toFixed(1) + '%',
+    x,
+    y
+  )
 }
-
-/*
-function BoundingBoxes (props) {
-  const detections = props.detections
-  const boxes = detections.map( (detection) => {
-    const scale = 100
-    return (
-      drawBoundingBox({
-        ctx,
-        x: {props.x},
-        y: {props.y},
-        width: scale,
-        height: scale
-      })
-    )
-  })
-}
-*/
 
 class Canvas extends React.Component {
   constructor(props) {
@@ -47,23 +34,31 @@ class Canvas extends React.Component {
   updateCanvas() {
     const canvas = this.refs.canvas
     const ctx = this.refs.canvas.getContext("2d")
+    const detections = this.props.detections
+    const width = this.refs.canvas.width
+    const height = this.refs.canvas.height
 
-    //ctx.clearRect(0,0, 300, 300);
-    console.log('Canvas props:', this.props);
-
-    drawBoundingBox({ctx, x: 10, y: 10, width: 50, height: 50});
-    drawBoundingBox({ctx, x: 20, y: 20, width: 50, height: 50});
+    detections.map( detection => {
+      drawBoundingBox({
+        ctx,
+        x: detection.x * width,
+        y: detection.y * height,
+        width: detection.w * width,
+        height: detection.h * height,
+        name: detection.name,
+        prob: detection.prob,
+      })
+    })
   }
 
   render() {
     return(
       <div>
-        <canvas ref="canvas" width={100} height={100} />
+        <canvas ref="canvas" width={250} height={250} />
       </div>
     )
   }
 }
-
 
 function DetectionList (props) {
   const detections = props.detections
@@ -157,12 +152,11 @@ class Detections extends React.Component {
           </div>
           <div className="right_column">
             <h3>Detected Objects</h3>
-            <DetectionList detections={this.state.foundObjects}/>
             <div>
               <h4>Detection Image</h4>
               <Canvas text={'yo mamma'} detections={this.state.foundObjects} source={this.imagePath} />
             </div>
-
+            <DetectionList detections={this.state.foundObjects}/>
           </div>
         </div>
       </div>

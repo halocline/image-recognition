@@ -1,0 +1,36 @@
+/* Colors */
+$nostalgia-jam: #581845;
+$nostalgia-burgandy: #900C3F;
+$nostalgia-red: #C70039;
+$nostalgia-orange: #FF5733;
+$nostalgia-gold: #FFC300;
+$lima-bean: #DAF7A6;
+$cool-grey: #f4f6f7;
+$warm-grey: #545657;
+$stone-blue: #21618C;
+
+
+
+body {
+  background-color: $cool-grey;
+  color: $warm-grey;
+}
+
+button {
+  border-radius: 3px;
+  color: $cool-grey;
+  background-color: lighten($stone-blue, 0%);
+  padding: .5em 1em;
+  font-size: 1em;
+  font-family: -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                "Roboto",
+                "Oxygen",
+                "Ubuntu",
+                "Cantarell",
+                "Fira Sans",
+                "Droid Sans",
+                "Helvetica Neue",
+                sans-serif;
+}
