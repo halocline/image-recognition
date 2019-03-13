@@ -36,7 +36,7 @@ class MediaInput extends React.Component {
       }
     })
     .then( res => {
-      this.props.imageUploadCallback(res.data.file)
+      this.props.imageUploadCallback(res.data.file, this.state.selectedFile.name)
       this.setState({
         uploaded: true,
         uploadedImage: apiConfig.url + '/files/' + this.state.selectedFile.name

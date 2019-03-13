@@ -7,22 +7,19 @@ const apiConfig = require('../config/').detectApi
 
 function drawBoundingBox(props) {
   const {ctx, x, y, width, height, name, prob} = props;
+  ctx.strokeStyle = '#FFC300';
   ctx.strokeRect(x, y, width, height);
+  ctx.font = '16px sans-serif';
+  ctx.textBaseline = 'top';
+  ctx.fillStyle = "#FFC300";
   ctx.fillText(
     name + ', ' + (prob * 100).toFixed(1) + '%',
     x,
-    y
+    y + height
   )
 }
 
 class Canvas extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      source: 'https://www.almanac.com/sites/default/files/styles/primary_image_in_article/public/birth_month_flowers-primary-1920x1280px_pixabay.jpg?itok=zmvl5X7w'
-    }
-  }
-
   componentDidMount() {
     this.updateCanvas()
   }
@@ -37,12 +34,17 @@ class Canvas extends React.Component {
     const detections = this.props.detections
     const width = this.refs.canvas.width
     const height = this.refs.canvas.height
+    let img = new Image()
+    img.src = this.props.source
+    img.className = 'result'
+
+    ctx.drawImage(img, 0, 0, width, height);
 
     detections.map( detection => {
       drawBoundingBox({
         ctx,
-        x: detection.x * width,
-        y: detection.y * height,
+        x: (detection.x * width) - ( (detection.w * width) / 2 ),
+        y: (detection.y * height) - ( (detection.h * height) / 2 ),
         width: detection.w * width,
         height: detection.h * height,
         name: detection.name,
@@ -54,7 +56,7 @@ class Canvas extends React.Component {
   render() {
     return(
       <div>
-        <canvas ref="canvas" width={250} height={250} />
+        <canvas ref="canvas" width={600} height={400} />
       </div>
     )
   }
@@ -92,6 +94,7 @@ class Detections extends React.Component {
     super(props);
     this.state = {
       imagePath: null,
+      imageFileName: null,
       foundObjects: [],
     }
 
@@ -133,9 +136,10 @@ class Detections extends React.Component {
 
   }
 
-  handleUploadedImage = (imagePath) => {
+  handleUploadedImage = (imagePath, fileName) => {
     this.setState({
       imagePath: './' + imagePath,
+      imageFileName: fileName,
     })
   }
 
@@ -154,7 +158,11 @@ class Detections extends React.Component {
             <h3>Detected Objects</h3>
             <div>
               <h4>Detection Image</h4>
-              <Canvas text={'yo mamma'} detections={this.state.foundObjects} source={this.imagePath} />
+              <Canvas
+                text={'yo mamma'}
+                detections={this.state.foundObjects}
+                source={apiConfig.url + '/files/' + this.state.imageFileName}
+              />
             </div>
             <DetectionList detections={this.state.foundObjects}/>
           </div>
