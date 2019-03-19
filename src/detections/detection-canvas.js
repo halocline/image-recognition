@@ -2,11 +2,11 @@ import React from 'react';
 
 function drawBoundingBox(props) {
   const {ctx, x, y, width, height, name, prob} = props;
-  ctx.strokeStyle = '#FFC300';
+  ctx.strokeStyle = '#DAF7A6';
   ctx.strokeRect(x, y, width, height);
   ctx.font = '16px sans-serif';
   ctx.textBaseline = 'top';
-  ctx.fillStyle = "#FFC300";
+  ctx.fillStyle = "#DAF7A6";
   ctx.fillText(
     name + ', ' + (prob * 100).toFixed(1) + '%',
     x,

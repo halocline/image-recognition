@@ -19,7 +19,6 @@ function DetectionList (props) {
       {listItems}
     </div>
   )
-
 }
 
 class Detection extends React.Component {

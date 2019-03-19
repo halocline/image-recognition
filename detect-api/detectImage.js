@@ -1,5 +1,6 @@
 const darknet = require('@moovel/yolo')
 const fs = require('fs')
+const request = require('request')
 
 const handleDetections = (detections) => {
   //console.log('Detections:', detections)
@@ -25,9 +26,12 @@ const detectImage = (options = 0) => {
     image: './public/files/scream.jpg'
   }
   */
+
   const params = {
     cfg: './cfg/yolo.cfg',
     weights: './yolo.weights',
+    //weights: 'https://storage.googleapis.com/gliss-image-recognition.appspot.com/darknet-yolo/yolo.weights',
+    //weights: '/Users/mdglissmann/Downloads/yolo.weights',
     data: './cfg/coco.data',
     image: options.image || './public/files/giraffe.jpg',
     thresh: 0.24, // optional, default: 0.24

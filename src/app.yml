@@ -1,0 +1,13 @@
+runtime: nodejs10 # For Node.js 8, use runtime: nodejs8
+
+instance_class: F2
+
+service: frontend
+
+handlers:
+- url: /
+  static_files: build/index.html
+  upload: build/index.html
+
+- url: /
+  static_dir: build
